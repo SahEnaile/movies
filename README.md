@@ -1,4 +1,10 @@
 API de Filmes
+
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7.0-brightgreen)
+![MongoDB](https://img.shields.io/badge/MongoDB-NoSQL-green)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 Este projeto é uma API RESTful simples para gerenciar informações de filmes, construída utilizando Spring Boot e MongoDB. A API permite que você recupere informações sobre filmes e suas respectivas avaliações.
 
 Funcionalidades
