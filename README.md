@@ -105,7 +105,7 @@ Pré-requisitos
 
 ```bash
 git clone https://github.com/seu-usuario/movies-api.git
-cd movies-api
+cd movies
 ```
 Configurar MongoDB
 Abra o arquivo src/main/resources/application.properties.
