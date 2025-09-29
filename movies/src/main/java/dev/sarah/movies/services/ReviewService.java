@@ -1,14 +1,15 @@
 package dev.sarah.movies.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Update;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import dev.sarah.movies.entities.Movie;
 import dev.sarah.movies.entities.Review;
 import dev.sarah.movies.repositorys.ReviewRepository;
+import dev.sarah.movies.repositorys.MovieRepository;
 
 @Service
 public class ReviewService {
@@ -17,16 +18,23 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private MongoTemplate mongoTemplate;
-
+    private MovieRepository movieRepository;
+    
+    @Transactional 
     public Review createReview(String reviewBody, String imdbId) {
-        Review review =  reviewRepository.save(new Review(reviewBody));
-
-        mongoTemplate.update(Movie.class)
-                .matching(Criteria.where("imdbId").is(imdbId))
-                .apply(new Update().push("reviewIds").value(review))
-                .first();
-                return review;
+        
+        Optional<Movie> movieOptional = movieRepository.findByImdbId(imdbId);
+        
+        if (!movieOptional.isPresent()) {
+            throw new RuntimeException("Movie not found with imdbId: " + imdbId);
+        }
+        
+        Movie movie = movieOptional.get();
+        Review review = new Review(reviewBody, movie); 
+        review = reviewRepository.save(review); 
+        movie.getReviewId().add(review);
+        
+        return review;
     }
 
 }

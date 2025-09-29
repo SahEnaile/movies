@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import jakarta.persistence.*; 
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Table(name = "reviews")
