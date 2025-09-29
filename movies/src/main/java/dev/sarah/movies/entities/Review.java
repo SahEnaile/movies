@@ -1,4 +1,4 @@
-package dev.sarah.movies;
+package dev.sarah.movies.entities;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
