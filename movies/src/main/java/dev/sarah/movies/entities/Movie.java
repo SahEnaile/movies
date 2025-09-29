@@ -3,21 +3,21 @@ package dev.sarah.movies.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
+import jakarta.persistence.*; 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
 
-@Document(collection = "movies")
+@Entity
+@Table(name = "movies")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
 
     @Id
-    private ObjectId id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String imdbId;
 
@@ -29,9 +29,12 @@ public class Movie {
 
     private String poster;
 
+    @ElementCollection
+    @CollectionTable(name = "movie_backdrops", joinColumns = @JoinColumn(name = "movie_id"))   
+    @Column(name = "backdrop") 
     private List<String> backdrops;
 
-    @DocumentReference
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Review> reviewId;
 
 }

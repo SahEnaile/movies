@@ -1,33 +1,28 @@
 package dev.sarah.movies.entities;
 
-import org.bson.types.ObjectId;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import jakarta.persistence.*; 
 import org.springframework.data.annotation.Id;
 
+@Entity
+@Table(name = "reviews")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Review {
 
-    @Id
-    private ObjectId id;
     private String body;
 
-    public Review() {}
+    private Long id;
 
-    public Review(String body) {
+    @ManyToMany
+    @JoinColumn(name = "movie_id", nullable = false)
+    private Movie movie;
+
+    public Review(String body, Movie movie) {
         this.body = body;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+        this.movie = movie;
     }
 }
