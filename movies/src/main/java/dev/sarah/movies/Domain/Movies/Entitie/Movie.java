@@ -1,10 +1,12 @@
-package dev.sarah.movies.entities;
+package dev.sarah.movies.Domain.Movies.Entitie;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*; 
 import org.springframework.data.annotation.Id;
+
+import dev.sarah.movies.Domain.Reviews.Entitie.Review;
 
 import java.util.List;
 

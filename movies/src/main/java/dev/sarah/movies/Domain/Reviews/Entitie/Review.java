@@ -1,8 +1,9 @@
-package dev.sarah.movies.entities;
+package dev.sarah.movies.Domain.Reviews.Entitie;
 
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import dev.sarah.movies.Domain.Movies.Entitie.Movie;
 import jakarta.persistence.*; 
 
 @Entity

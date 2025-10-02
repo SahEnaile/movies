@@ -5,10 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.sarah.movies.entities.Movie;
+import dev.sarah.movies.Domain.Movies.Entitie.Movie;
 import dev.sarah.movies.services.MovieService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,5 +34,11 @@ public class MovieController {
     @GetMapping("/{imdbId}")
     public ResponseEntity<Optional<Movie>> getSingleMovie(@PathVariable String  imdbId) {
         return new ResponseEntity<Optional<Movie>>(movieService.singleMovie(imdbId), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/v1/movies")
+    public ResponseEntity<Movie> CreateMovie(@RequestBody Movie payloadMovie) {
+        Movie newMovie = movieService.NewMovie(payloadMovie);
+        return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
 }
