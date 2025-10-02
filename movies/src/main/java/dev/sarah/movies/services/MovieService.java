@@ -3,7 +3,7 @@ package dev.sarah.movies.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.sarah.movies.entities.Movie;
+import dev.sarah.movies.Domain.Movies.Entitie.Movie;
 import dev.sarah.movies.repositorys.MovieRepository;
 
 import java.util.List;
@@ -21,5 +21,15 @@ public class MovieService {
     public Optional<Movie> singleMovie(String imdbId) {
         return movieRepository.findByImdbId(imdbId);
     }
+    public Movie NewMovie(Movie movie) {
+        return movieRepository.save(movie);
+    }
+    public Movie updateMovie(String imdbId, Movie movie) {
+        Optional<Movie> existigMovie = movieRepository.findByImdbId(imdbId);
 
+        if (existigMovie.isPresent()) {
+            
+        }
+        return movieRepository.save(movie)
+    }
 }
