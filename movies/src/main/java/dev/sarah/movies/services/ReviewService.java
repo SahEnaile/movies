@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import dev.sarah.movies.entities.Movie;
-import dev.sarah.movies.entities.Review;
+import dev.sarah.movies.Domain.Movies.Entitie.Movie;
+import dev.sarah.movies.Domain.Reviews.Entitie.Review;
 import dev.sarah.movies.repositorys.ReviewRepository;
 import dev.sarah.movies.repositorys.MovieRepository;
 
