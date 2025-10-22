@@ -20,9 +20,4 @@ public class Review {
     @ManyToMany
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
-
-    public Review(String body, Movie movie) {
-        this.body = body;
-        this.movie = movie;
-    }
 }
