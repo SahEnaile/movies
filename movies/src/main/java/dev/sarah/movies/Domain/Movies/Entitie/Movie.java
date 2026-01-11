@@ -1,12 +1,21 @@
-package dev.sarah.movies.Domain.Movies.Entitie;
+package dev.sarah.movies.domain.movies.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.*; 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 
-import dev.sarah.movies.Domain.Reviews.Entitie.Review;
+import dev.sarah.movies.domain.reviews.entities.Review;
 
 import java.util.List;
 
@@ -19,7 +28,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String imdbId;
 
@@ -36,7 +45,7 @@ public class Movie {
     @Column(name = "backdrop") 
     private List<String> backdrops;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<Review> reviewId;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 
 }
