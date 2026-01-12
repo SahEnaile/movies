@@ -2,39 +2,34 @@ package dev.sarah.movies.services;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import dev.sarah.movies.Domain.Movies.Entitie.Movie;
-import dev.sarah.movies.Domain.Reviews.Entitie.Review;
-import dev.sarah.movies.repositorys.ReviewRepository;
-import dev.sarah.movies.repositorys.MovieRepository;
+import dev.sarah.movies.domain.movies.entities.Movie;
+import dev.sarah.movies.domain.reviews.entities.Review;
+import dev.sarah.movies.repositories.ReviewRepository;
+import dev.sarah.movies.repositories.MovieRepository;
 
 @Service
 public class ReviewService {
 
-    @Autowired
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
+    private final MovieRepository movieRepository;
 
-    @Autowired
-    private MovieRepository movieRepository;
+    public ReviewService(ReviewRepository reviewRepository, MovieRepository movieRepository) {
+        this.reviewRepository = reviewRepository;
+        this.movieRepository = movieRepository;
+    }
     
     @Transactional 
     public Review createReview(String reviewBody, String imdbId) {
+        Movie movie = movieRepository.findByImdbId(imdbId)
+                .orElseThrow(() -> new RuntimeException("Movie not found with imdbId: " + imdbId));
         
-        Optional<Movie> movieOptional = movieRepository.findByImdbId(imdbId);
-        
-        if (!movieOptional.isPresent()) {
-            throw new RuntimeException("Movie not found with imdbId: " + imdbId);
-        }
-        
-        Movie movie = movieOptional.get();
         Review review = new Review(reviewBody, movie); 
         review = reviewRepository.save(review); 
-        movie.getReviewId().add(review);
+        movie.getReviews().add(review);
         
         return review;
     }
-
 }
