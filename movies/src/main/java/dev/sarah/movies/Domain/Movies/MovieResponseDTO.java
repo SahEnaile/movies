@@ -1,5 +1,8 @@
-package dev.sarah.movies.Domain.Movies;
+package dev.sarah.movies.domain.movies.dtos;
 
-public record MovieResponseDTO() {
-    
+public record MovieResponseDTO(
+    String imdbId,
+    String title,
+    String poster
+) {
 }

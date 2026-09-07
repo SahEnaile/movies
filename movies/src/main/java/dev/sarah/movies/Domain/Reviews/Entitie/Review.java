@@ -1,10 +1,16 @@
-package dev.sarah.movies.Domain.Reviews.Entitie;
+package dev.sarah.movies.domain.reviews.entities;
 
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import dev.sarah.movies.Domain.Movies.Entitie.Movie;
-import jakarta.persistence.*; 
+import dev.sarah.movies.domain.movies.entities.Movie;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "reviews")
@@ -13,11 +19,18 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 public class Review {
 
-    private String body;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    private String body;
+
+    @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
+
+    public Review(String body, Movie movie) {
+        this.body = body;
+        this.movie = movie;
+    }
 }

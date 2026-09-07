@@ -1,13 +1,13 @@
-package dev.sarah.movies.Mapper;
+package dev.sarah.movies.mappers;
+
 import org.mapstruct.Mapper;
 
-import dev.sarah.movies.Domain.Movies.MovieDTO;
-import dev.sarah.movies.Domain.Movies.MovieResponseDTO;
-import dev.sarah.movies.Domain.Movies.Entitie.Movie;
-import dev.sarah.movies.repositorys.MovieRepository;
+import dev.sarah.movies.domain.movies.dtos.MovieDTO;
+import dev.sarah.movies.domain.movies.dtos.MovieResponseDTO;
+import dev.sarah.movies.domain.movies.entities.Movie;
 
-@Mapper(componenteModel = "spring")
-public interface Mapper {
+@Mapper(componentModel = "spring")
+public interface MovieMapper {
 
     Movie toEntity(MovieDTO dto);
 

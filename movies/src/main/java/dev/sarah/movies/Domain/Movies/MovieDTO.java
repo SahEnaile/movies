@@ -1,11 +1,9 @@
-package dev.sarah.movies.Domain.Movies;
+package dev.sarah.movies.domain.movies.dtos;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
-public record MovieDTO() {
-    @Notblanck(message = "O ID é obrigatório")
-    String imdbId,
-
-    
-
+public record MovieDTO(
+    @NotBlank(message = "O ID é obrigatório")
+    String imdbId
+) {
 }

@@ -1,44 +1,46 @@
 package dev.sarah.movies.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import dev.sarah.movies.Domain.Movies.Entitie.Movie;
+import dev.sarah.movies.domain.movies.entities.Movie;
 import dev.sarah.movies.services.MovieService;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/movies")
 @CrossOrigin(origins = "https://localhost:3000")
-
-
 public class MovieController {
 
-    @Autowired
-    private MovieService movieService;
+    private final MovieService movieService;
+
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies() {
-        return new ResponseEntity<List<Movie>>(movieService.allMovies(), HttpStatus.OK);
+        return ResponseEntity.ok(movieService.allMovies());
     }
 
     @GetMapping("/{imdbId}")
-    public ResponseEntity<Optional<Movie>> getSingleMovie(@PathVariable String  imdbId) {
-        return new ResponseEntity<Optional<Movie>>(movieService.singleMovie(imdbId), HttpStatus.OK);
+    public ResponseEntity<Movie> getSingleMovie(@PathVariable String imdbId) {
+        return movieService.singleMovie(imdbId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/api/v1/movies")
-    public ResponseEntity<Movie> CreateMovie(@RequestBody Movie payloadMovie) {
-        Movie newMovie = movieService.NewMovie(payloadMovie);
+    @PostMapping
+    public ResponseEntity<Movie> createMovie(@RequestBody Movie payloadMovie) {
+        Movie newMovie = movieService.newMovie(payloadMovie);
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
 }
